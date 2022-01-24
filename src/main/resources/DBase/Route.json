@@ -1,0 +1,32 @@
+[
+  {
+    "routeId": 0,
+    "departPoint": "None",
+    "arrivalPoint": "None"
+  },
+  {
+    "routeId": 1,
+    "departPoint": "Los Angeles",
+    "arrivalPoint": "Samara"
+  },
+  {
+    "routeId": 2,
+    "departPoint": "Volgograd",
+    "arrivalPoint": "Kiev"
+  },
+  {
+    "routeId": 3,
+    "departPoint": "Minsk",
+    "arrivalPoint": "Deli"
+  },
+  {
+    "routeId": 4,
+    "departPoint": "Mexico",
+    "arrivalPoint": "Murmansk"
+  },
+  {
+    "routeId": 5,
+    "departPoint": "Moskva",
+    "arrivalPoint": "Murmansk"
+  }
+]
