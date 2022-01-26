@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Flight {
+
     private Long flightId;
     private String airbus;
     private Long route;
@@ -11,6 +12,10 @@ public class Flight {
     private Date travelTime;
 
     private Route routes;
+
+    public Route getRoutes() {
+        return routes;
+    }
 
 
     public Flight(Long flightId, String airbus, Long route, Date departTime, Date travelTime) {

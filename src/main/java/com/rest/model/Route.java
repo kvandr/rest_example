@@ -1,8 +1,9 @@
 package com.rest.model;
 
-import java.util.Objects;
 
+import java.util.Objects;
 public class Route {
+
     private Long routeId;
     private String departPoint;
     private String arrivalPoint;
