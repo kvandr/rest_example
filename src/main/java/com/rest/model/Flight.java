@@ -1,21 +1,15 @@
 package com.rest.model;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
-@Entity
 public class Flight {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long flightId;
     private String airbus;
     private Long route;
     private Date departTime;
     private Date travelTime;
 
-    @ManyToOne()
-    @JoinColumn(name="id_route")
     private Route routes;
 
 

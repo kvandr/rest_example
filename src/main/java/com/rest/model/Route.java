@@ -1,15 +1,8 @@
 package com.rest.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.Objects;
 
-@Entity
 public class Route {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long routeId;
     private String departPoint;
     private String arrivalPoint;

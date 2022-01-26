@@ -18,6 +18,7 @@ public class FlightController {
     @Autowired
     private final RouteService routeService;
 
+
     @Autowired
     public FlightController(FlightService flightService, RouteService routeService) {
 
@@ -26,50 +27,57 @@ public class FlightController {
     }
 
     @PostMapping(value = "/flight")
-    public ResponseEntity<?> createTrack (
-            @RequestBody Flight flight) {
-        return new ResponseEntity<>(flightService.createTrack(flight), HttpStatus.OK);
+    public ResponseEntity<?> createFlight (
+            @RequestParam String airbus,
+            @RequestParam Long route,
+            @RequestParam String departTime,
+            @RequestParam String travelTime) {
+        return new ResponseEntity<>(flightService.addFlight(airbus, route, departTime, travelTime), HttpStatus.OK);
     }
 
     @PutMapping("/flight")
-    public  ResponseEntity<?> saveAll(@RequestBody List<Flight> flightList){
+    public  ResponseEntity<?> saveAll(@RequestBody Flight flightList){
         return new ResponseEntity<>(flightService.saveAll(flightList), HttpStatus.OK);
     }
 
     @GetMapping(value = "/flight")
-    public ResponseEntity<List<Flight>> readAll() {
-        final List<Flight> flights = flightService.readAll();
+    public ResponseEntity<?> readAll() {
+        final String flights = flightService.viewAll();
         return new ResponseEntity<>(flights, HttpStatus.OK);
     }
 
     @GetMapping(value = "/flight/{id}")
-    public ResponseEntity<Flight> read(@PathVariable(name = "id") Long id) {
-        final Flight flight = flightService.read(id);
+    public ResponseEntity<?> read(@PathVariable(name = "id") Long id) {
+        final String flight = flightService.searchFlight(id);
         return new ResponseEntity<>(flight, HttpStatus.OK);
     }
 
     @GetMapping(value = "/flight/{search}")
-    public ResponseEntity<List<Flight>> readSearch(@PathVariable(name = "search") String search) {
-        final List<Flight> flight = flightService.readSearch(search);
+    public ResponseEntity<?> readSearch(@PathVariable(name = "search") String search) {
+        final String flight = flightService.searchFlight(search);
         return new ResponseEntity<>(flight, HttpStatus.OK);
     }
 
     @PutMapping(value = "/flight")
     public ResponseEntity<?> update(
-            @RequestBody Flight flight) {
-        final Flight updated = flightService.update(flight);
+            @RequestParam Long idFlight,
+            @RequestParam String airbus,
+            @RequestParam Long route,
+            @RequestParam String departTime,
+            @RequestParam String travelTime) {
+        final Boolean updated = flightService.updateFlight(idFlight, airbus, route, departTime, travelTime);
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/flight/{id}")
-    public ResponseEntity<?> delete(@PathVariable(name = "id") Long id) {
-        final boolean deleted = flightService.delete(id);
+    public ResponseEntity<?> deleteId(@PathVariable(name = "id") Long id) {
+        final boolean deleted = flightService.deleteFlight(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value = "/flight")
-    public ResponseEntity<?> deleteAll(@RequestBody List<Flight> flightList) {
-        flightService.deleteAll(flightList);
+    public ResponseEntity<?> delete(@RequestBody List<Flight> flightList) {
+        flightService.deleteFlight(flightList);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -1,26 +1,16 @@
 package com.rest.service;
-
 import com.rest.model.Flight;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 public interface FlightService {
-
-    void create(Flight flight, Long route);
-
-    Flight createTrack(Flight flight);
-
-    List<Flight> readAll();
-
-    Flight read(Long id);
-
-    Flight update(Flight flight);
-
-    boolean delete(Long id);
-
-    List<Flight> readSearch(String search);
-
-    Iterable<Flight> saveAll(Iterable<Flight> flightList);
-
-    void deleteAll(Iterable<Flight> flightList);
+    String addFlight(String airbus, Long route, String departTime, String travelTime);
+    Boolean updateFlight(Long IdFlight, String airbus, Long route, String departTime,String travelTime);
+    Boolean deleteFlight(Long idFlight);
+    Boolean deleteFlight(List<Flight> flightList);
+    Boolean saveAll(Flight flight);
+    String viewAll();
+    String searchFlight(Long idFlight);
+    String searchFlight(String airbuses);
 }
