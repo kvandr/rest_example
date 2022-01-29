@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 public class FlightController {
 
@@ -27,22 +25,18 @@ public class FlightController {
     }
 
     @PostMapping(value = "/flight")
-    public ResponseEntity<?> createFlight (
-            @RequestParam String airbus,
-            @RequestParam Long route,
-            @RequestParam String departTime,
-            @RequestParam String travelTime) {
-        return new ResponseEntity<>(flightService.addFlight(airbus, route, departTime, travelTime), HttpStatus.OK);
+    public ResponseEntity<?> createFlight (@RequestBody Flight flightList) {
+        return new ResponseEntity<>(flightService.addFlight(flightList), HttpStatus.OK);
     }
 
-    @PutMapping("/flight")
-    public  ResponseEntity<?> saveAll(@RequestBody Flight flightList){
-        return new ResponseEntity<>(flightService.saveAll(flightList), HttpStatus.OK);
+    @PutMapping("/flight/{id}")
+    public  ResponseEntity<?> saveAll(@RequestBody Flight flightList, @RequestParam Long id){
+        return new ResponseEntity<>(flightService.saveAll(flightList, id), HttpStatus.OK);
     }
 
     @GetMapping(value = "/flight")
     public ResponseEntity<?> readAll() {
-        final String flights = flightService.viewAll();
+        final String flights = flightService.viewFlight();
         return new ResponseEntity<>(flights, HttpStatus.OK);
     }
 
@@ -58,26 +52,9 @@ public class FlightController {
         return new ResponseEntity<>(flight, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/flight")
-    public ResponseEntity<?> update(
-            @RequestParam Long idFlight,
-            @RequestParam String airbus,
-            @RequestParam Long route,
-            @RequestParam String departTime,
-            @RequestParam String travelTime) {
-        final Boolean updated = flightService.updateFlight(idFlight, airbus, route, departTime, travelTime);
-        return new ResponseEntity<>(updated, HttpStatus.OK);
-    }
-
     @DeleteMapping(value = "/flight/{id}")
     public ResponseEntity<?> deleteId(@PathVariable(name = "id") Long id) {
         final boolean deleted = flightService.deleteFlight(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PostMapping(value = "/flight")
-    public ResponseEntity<?> delete(@RequestBody List<Flight> flightList) {
-        flightService.deleteFlight(flightList);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

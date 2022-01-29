@@ -26,7 +26,7 @@ public class FlightServiceImpl implements FlightService{
     RouteRepo route;
 
     @Override
-    public String addFlight(String airbus, Long route, String departTime, String travelTime) {
+    public String addFlight(Flight flightList) {
         long id = 1L;
         List<Flight> list = flight.fileLoad();
         Flight flightEnd;
@@ -36,9 +36,12 @@ public class FlightServiceImpl implements FlightService{
                 id = flightEnd.getFlightId() + 1;
         }
         try{
-            Date departTimes = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz").parse(departTime);
-            Date travelTimes = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz").parse(travelTime);
-            Flight flightier = new Flight(id, airbus, route, departTimes, travelTimes);
+            Date departTimes = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz").parse(
+                    String.valueOf(flightList.getDepartTime()));
+            Date travelTimes = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz").parse(
+                    String.valueOf(flightList.getTravelTime()));
+            Flight flightier = new Flight(id, flightList.getAirbus(), flightList.getRoute(), flightList.getDepartTime(),
+                    flightList.getTravelTime());
             if (flight.save(flightier)) return "Flight added.";
         }
         catch (ParseException e){
@@ -48,8 +51,14 @@ public class FlightServiceImpl implements FlightService{
     }
 
     @Override
-    public Boolean saveAll(Flight flights) {
-        return flight.save(flights);
+    public Boolean saveAll(Flight flights, Long idFlight) {
+        List <Flight> list = flight.fileLoad();
+        for(Flight flightTmp:list){
+            if(idFlight.equals(flightTmp.getFlightId())) {
+                return flight.save(flights);
+            }
+        }
+        return Boolean.FALSE;
     }
 
     @Override
@@ -103,7 +112,7 @@ public class FlightServiceImpl implements FlightService{
     }
 
     @Override
-    public String viewAll(){
+    public String viewFlight(){
         List<Flight> airFl = flight.fileLoad();
         StringBuffer data = new StringBuffer();
         for(Flight flights:airFl){
@@ -118,7 +127,6 @@ public class FlightServiceImpl implements FlightService{
     public String searchFlight(Long idFlight){
         try {
             Flight flighty = flight.findFlight(idFlight);
-
             StringBuffer data = new StringBuffer();
             viewContent(flighty, data);
             data.append("-------------------end-------------------\n");

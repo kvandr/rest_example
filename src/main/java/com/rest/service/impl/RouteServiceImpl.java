@@ -26,7 +26,7 @@ public class RouteServiceImpl implements RouteService {
     RouteRepo routes;
 
     @Override
-    public String addRoute(String DepartPoint, String ArrivalPoint){
+    public String addRoute(Route routeList){
         long routeId = 1L;
         List<Route> list = routes.fileLoad();
         Route routeEnd;
@@ -36,7 +36,7 @@ public class RouteServiceImpl implements RouteService {
                 routeId = routeEnd.getRouteId() + 1;
         }
         try {
-            Route route = new Route(DepartPoint, ArrivalPoint);
+            Route route = new Route(routeList.getDepartPoint(), routeList.getArrivalPoint());
             route.setRouteId(routeId);
             if (routes.save(route)) return "Successfully added!";
         } catch (Exception e) {
@@ -77,14 +77,14 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public Boolean updateRoute(Long id, String departPoint, String arrivalPoint) {
+    public Boolean updateRoute(Long id, Route routeList) {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
 
             Route rUpdate = new Route(routes.getRouteDepart(id).getRouteId(),
-                    reader.readLine(),
-                    reader.readLine()
+                    routeList.getDepartPoint(),
+                    routeList.getArrivalPoint()
             );
 
             List <Route> list = routes.fileLoad();
@@ -96,14 +96,13 @@ public class RouteServiceImpl implements RouteService {
             }
             routes.fileUnload(list);
             return Boolean.TRUE;
-        } catch (NullPointerException | NotFoundException | IOException e) {
+        } catch (NullPointerException | NotFoundException e) {
             e.printStackTrace();
         }
         return Boolean.FALSE;
     }
 
-    @Override
-    public String viewAll(){
+    public String viewRoute(){
         List<Route> airFl = routes.fileLoad();
         StringBuffer data = new StringBuffer();
         for(Route route:airFl){
@@ -130,14 +129,14 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public String searchRoute(String departPoint, String arrivalPoint){
-        List<Route> routeList = routes.fileLoad();
-        Pattern p = Pattern.compile(departPoint, Pattern.CASE_INSENSITIVE);
+    public String searchRoute(Route routeList){
+        List<Route> list = routes.fileLoad();
+        Pattern p = Pattern.compile(routeList.getDepartPoint(), Pattern.CASE_INSENSITIVE);
         Matcher m1, m2;
 
         StringBuffer data = new StringBuffer();
         String departPoints, arrivalPoints;
-        for(Route airRoute:routeList){
+        for(Route airRoute:list){
             departPoints = airRoute.getDepartPoint();
             arrivalPoints = airRoute.getArrivalPoint();
             m1 = p.matcher(departPoints);

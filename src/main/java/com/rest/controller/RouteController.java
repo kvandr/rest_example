@@ -1,5 +1,6 @@
 package com.rest.controller;
 
+import com.rest.model.Route;
 import com.rest.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,15 +19,14 @@ public class RouteController {
         this.routeService = routeService;
     }
 
-    @PostMapping
-    public ResponseEntity<?> createRoute(@RequestParam String departPoint,
-                                         @RequestParam String arrivalPoint) {
-        return new ResponseEntity<>(routeService.addRoute(departPoint, arrivalPoint), HttpStatus.CREATED);
+    @PostMapping(value = "/route")
+    public ResponseEntity<?> createRoute(@RequestBody Route routeList) {
+        return new ResponseEntity<>(routeService.addRoute(routeList), HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping(value = "/route")
     public ResponseEntity<?> readAll() {
-        final String routes = routeService.viewAll();
+        final String routes = routeService.viewRoute();
         return new ResponseEntity<>(routes, HttpStatus.OK);
     }
 
@@ -36,19 +36,18 @@ public class RouteController {
         return new ResponseEntity<>(routes, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/route")
-    public ResponseEntity<?> readByPoint(@RequestParam String departPoint, @RequestParam String arrivalPoint) {
-        final String route = routeService.searchRoute(departPoint, arrivalPoint);
+    /*@GetMapping(value = "/route")
+    public ResponseEntity<?> readByPoint(@RequestBody Route routeList) {
+        final String route = routeService.searchRoute(routeList);
         return new ResponseEntity<>(route, HttpStatus.OK);
-    }
+    }*/
 
     @PutMapping(value = "/route/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,  //consumes принимает фиксируемый формат данных
             produces = MediaType.APPLICATION_JSON_VALUE)  //produces возвращает фиксируемый формат данных
     public ResponseEntity<?> update(@PathVariable(name = "id") Long id,
-                                    @RequestParam String departPoint,
-                                    @RequestParam String arrivalPoint) {
-        final boolean updated = routeService.updateRoute(id, departPoint, arrivalPoint);
+                                    @RequestBody Route routeList) {
+        final boolean updated = routeService.updateRoute(id, routeList);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
