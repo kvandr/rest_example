@@ -35,18 +35,11 @@ public class FlightServiceImpl implements FlightService{
             if (flightEnd != null)
                 id = flightEnd.getFlightId() + 1;
         }
-        try{
-            Date departTimes = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz").parse(
-                    String.valueOf(flightList.getDepartTime()));
-            Date travelTimes = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz").parse(
-                    String.valueOf(flightList.getTravelTime()));
-            Flight flightier = new Flight(id, flightList.getAirbus(), flightList.getRoute(), flightList.getDepartTime(),
-                    flightList.getTravelTime());
-            if (flight.save(flightier)) return "Flight added.";
-        }
-        catch (ParseException e){
-            e.printStackTrace();
-        }
+        Date departTimes = flightList.getDepartTime();
+        Date travelTimes = flightList.getTravelTime();
+        Flight flightier = new Flight(id, flightList.getAirbus(), flightList.getRoute(), flightList.getDepartTime(),
+                flightList.getTravelTime());
+        if (flight.save(flightier)) return "Flight added.";
         return "Not added!";
     }
 

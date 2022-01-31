@@ -1,5 +1,7 @@
 package com.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -8,7 +10,9 @@ public class Flight {
     private Long flightId;
     private String airbus;
     private Long route;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssz")
     private Date departTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssz")
     private Date travelTime;
 
     private Route routes;
