@@ -1,11 +1,19 @@
 package com.rest.model;
 
 
+import javax.persistence.*;
 import java.util.Objects;
+
+@Entity
+@Table(name = "route")
 public class Route {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long routeId;
+    @Column
     private String departPoint;
+    @Column
     private String arrivalPoint;
 
     public Route() {

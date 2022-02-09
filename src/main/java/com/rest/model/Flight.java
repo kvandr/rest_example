@@ -2,27 +2,35 @@ package com.rest.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "flight")
 public class Flight {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long flightId;
+    @Column
     private String airbus;
-    private Long route;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssz")
+    @Column
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
     private Date departTime;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssz")
+    @Column
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
     private Date travelTime;
 
-    private Route routes;
+    @ManyToOne()
+    @JoinColumn(name="route_id")
+    private Route route;
 
     public Route getRoutes() {
-        return routes;
+        return route;
     }
 
 
-    public Flight(Long flightId, String airbus, Long route, Date departTime, Date travelTime) {
+    public Flight(Long flightId, String airbus, Route route, Date departTime, Date travelTime) {
         this.flightId = flightId;
         this.airbus = airbus;
         this.route = route;
@@ -33,7 +41,7 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(String airbus, Long route, Date departTime, Date travelTime) {
+    public Flight(String airbus, Route route, Date departTime, Date travelTime) {
         this.airbus = airbus;
         this.route = route;
         this.departTime = departTime;
@@ -54,9 +62,9 @@ public class Flight {
     }
 
     public Long getRoute() {
-        return route;
+        return route.getRouteId();
     }
-    public void setRoute(Long route) {
+    public void setRoute(Route route) {
         this.route = route;
     }
 
@@ -76,11 +84,11 @@ public class Flight {
 
 
     public String getDepartPoint(){
-        return routes.getDepartPoint();
+        return route.getDepartPoint();
     }
 
     public String getArrivalPoint(){
-        return routes.getArrivalPoint();
+        return route.getArrivalPoint();
     }
 
 
