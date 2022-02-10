@@ -28,7 +28,7 @@ public class FlightServiceImpl implements FlightService{
 
     @Override
     public Flight read(Long id) {
-        return flight.findById(id);
+        return flight.findByFlightId(id);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class FlightServiceImpl implements FlightService{
     @Override
     public boolean delete(Long id) {
 
-        flight.delete(flight.findById(id));
+        flight.delete(flight.findByFlightId(id));
         return true;
     }
 

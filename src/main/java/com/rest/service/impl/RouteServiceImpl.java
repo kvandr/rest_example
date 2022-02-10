@@ -24,7 +24,7 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public Route read(Long id) {
-        return routes.findById(id);
+        return routes.findByRouteId(id);
     }
 
     @Override
@@ -35,12 +35,12 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public boolean delete(Long id) {
-        routes.delete(routes.findById(id));
+        routes.delete(routes.findByRouteId(id));
         return true;
     }
 
     @Override
-    public Route readByDepartTimeOrArrivalTime(String departTime, String arrivalTime) {
-        return routes.findByDepartTimeOrArrivalTime(departTime, arrivalTime);
+    public List<Route> readSearch(String search) {
+        return routes.findByDepartPointOrArrivalPoint(search);
     }
 }

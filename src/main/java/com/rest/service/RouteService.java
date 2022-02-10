@@ -16,5 +16,5 @@ public interface RouteService {
 
     boolean delete(Long id);
 
-    Route readByDepartTimeOrArrivalTime(String departTime, String arrivalTime);
+    List<Route> readSearch(String search);
 }

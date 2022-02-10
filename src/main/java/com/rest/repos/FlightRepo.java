@@ -14,7 +14,7 @@ public interface FlightRepo extends CrudRepository<Flight, Integer> {
             "or LOWER(t.departTime) like %?1% " + "or LOWER(t.travelTime) like %?1%")
     List<Flight> findByAirbusOrRouteOrDepartTimeOrTravelTime(String param);
 
-    Flight findById(Long id);
+    Flight findByFlightId(Long id);
 
     List<Flight> findAll();
 
