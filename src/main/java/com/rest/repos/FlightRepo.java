@@ -11,8 +11,7 @@ public interface FlightRepo extends CrudRepository<Flight, Integer> {
 
     @Query("SELECT t FROM Flight t WHERE LOWER(t.airbus) LIKE %?1% " +
             "or LOWER(t.route) like %?1% " +
-            "or LOWER(t.departTime) like %?1% or LOWER(t.travelTime) like %?1%" +
-            " or LOWER(t.genre.nameGenre) like %?1% ")
+            "or LOWER(t.departTime) like %?1% " + "or LOWER(t.travelTime) like %?1%")
     List<Flight> findByAirbusOrRouteOrDepartTimeOrTravelTime(String param);
 
     Flight findById(Long id);
