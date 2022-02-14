@@ -27,13 +27,13 @@ public class FlightController {
     }
 
     @PostMapping(value = "/flight")
-    public ResponseEntity<?> createFlight (@RequestBody Flight flightList) {
-        return new ResponseEntity<>(flightService.createFlight(flightList), HttpStatus.OK);
+    public ResponseEntity<?> createFlight (@RequestBody Flight flight) {
+        return new ResponseEntity<>(flightService.createFlight(flight), HttpStatus.OK);
     }
 
-    @PutMapping("/flight")
-    public  ResponseEntity<?> update(@RequestBody Flight flightList){
-        final Flight updated = flightService.update(flightList);
+    @PutMapping("/flight/{id}")
+    public  ResponseEntity<?> update(@RequestBody Flight flight){
+        final Flight updated = flightService.update(flight);
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 

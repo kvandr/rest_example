@@ -1,6 +1,7 @@
 package com.rest.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "flight")
+@Data
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,14 +23,9 @@ public class Flight {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
     private Date travelTime;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="route_id")
     private Route route;
-
-    public Route getRoutes() {
-        return route;
-    }
-
 
     public Flight(Long flightId, String airbus, Route route, Date departTime, Date travelTime) {
         this.flightId = flightId;
@@ -46,49 +43,6 @@ public class Flight {
         this.route = route;
         this.departTime = departTime;
         this.travelTime = travelTime;
-    }
-    public Long getFlightId() {
-        return flightId;
-    }
-    public void setFlightId(Long flightId) {
-        this.flightId = flightId;
-    }
-
-    public String getAirbus() {
-        return airbus;
-    }
-    public void setAirbus(String airbus) {
-        this.airbus = airbus;
-    }
-
-    public Long getRoute() {
-        return route.getRouteId();
-    }
-    public void setRoute(Route route) {
-        this.route = route;
-    }
-
-    public Date getDepartTime() {
-        return departTime;
-    }
-    public void setDepartTime(Date departTime) {
-        this.departTime = departTime;
-    }
-
-    public Date getTravelTime() {
-        return travelTime;
-    }
-    public void setTravelTime(Date travelTime) {
-        this.travelTime = travelTime;
-    }
-
-
-    public String getDepartPoint(){
-        return route.getDepartPoint();
-    }
-
-    public String getArrivalPoint(){
-        return route.getArrivalPoint();
     }
 
 

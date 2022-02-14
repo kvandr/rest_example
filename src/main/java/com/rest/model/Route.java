@@ -1,11 +1,14 @@
 package com.rest.model;
 
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "route")
+@Data
 public class Route {
 
     @Id
@@ -27,26 +30,6 @@ public class Route {
     public Route(Long routeId,String departPoint, String arrivalPoint) {
         this.routeId = routeId;
         this.departPoint = departPoint;
-        this.arrivalPoint = arrivalPoint;
-    }
-    public Long getRouteId(){
-        return this.routeId;
-    }
-    public void setRouteId(Long routeId) {
-        this.routeId = routeId;
-    }
-
-    public String getDepartPoint(){
-        return this.departPoint;
-    }
-    public void setDepartPoint(String departPoint) {
-        this.departPoint = departPoint;
-    }
-
-    public String getArrivalPoint(){
-        return this.arrivalPoint;
-    }
-    public void setArrivalPoint(String arrivalPoint) {
         this.arrivalPoint = arrivalPoint;
     }
 

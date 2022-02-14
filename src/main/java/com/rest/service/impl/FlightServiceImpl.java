@@ -2,6 +2,7 @@ package com.rest.service.impl;
 
 import com.rest.model.Flight;
 import com.rest.repos.FlightRepo;
+import com.rest.repos.RouteRepo;
 import com.rest.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class FlightServiceImpl implements FlightService{
     @Override
     public Flight createFlight(Flight flights) {
         return flight.save(flights);
+
     }
 
     @Override
