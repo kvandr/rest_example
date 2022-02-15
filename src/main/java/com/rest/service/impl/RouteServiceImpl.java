@@ -28,9 +28,8 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public boolean update(Route route, Long id) {
-        routes.save(route);
-        return true;
+    public Route update(Route route) {
+        return routes.save(route);
     }
 
     @Override

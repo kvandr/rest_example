@@ -15,11 +15,14 @@ import java.util.List;
 public class FlightServiceImpl implements FlightService{
     @Autowired
     FlightRepo flight;
-
+    @Autowired
+    RouteRepo routes;
 
     @Override
     public Flight createFlight(Flight flights) {
-        return flight.save(flights);
+        flights.setRoute(routes.findByRouteId(flights.getRoute().getRouteId()));
+        flight.save(flights);
+        return flight.findByFlightId(flights.getFlightId());
 
     }
 
@@ -35,7 +38,9 @@ public class FlightServiceImpl implements FlightService{
 
     @Override
     public Flight update(Flight flights) {
-        return flight.save(flights);
+        flights.setRoute(routes.findByRouteId(flights.getRoute().getRouteId()));
+        flight.save(flights);
+        return flight.findByFlightId(flights.getFlightId());
     }
 
     @Override

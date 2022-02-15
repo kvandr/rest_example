@@ -12,7 +12,7 @@ public interface RouteService {
 
     Route read(Long id);
 
-    boolean update(Route route, Long id);
+    Route update(Route route);
 
     boolean delete(Long id);
 

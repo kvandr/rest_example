@@ -31,8 +31,10 @@ public class FlightController {
         return new ResponseEntity<>(flightService.createFlight(flight), HttpStatus.OK);
     }
 
-    @PutMapping("/flight/{id}")
-    public  ResponseEntity<?> update(@RequestBody Flight flight){
+    @PutMapping(value = "/flight/{id}")
+    public  ResponseEntity<?> update(@PathVariable(name = "id") Long id,
+                                     @RequestBody Flight flight){
+        flight.setFlightId(id);
         final Flight updated = flightService.update(flight);
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }

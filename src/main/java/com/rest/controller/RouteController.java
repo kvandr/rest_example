@@ -41,10 +41,10 @@ public class RouteController {
     @PutMapping(value = "/route/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,  //consumes принимает фиксируемый формат данных
             produces = MediaType.APPLICATION_JSON_VALUE)  //produces возвращает фиксируемый формат данных
-    public ResponseEntity<?> update(@PathVariable(name = "id") Long id,
-                                    @RequestBody Route routeList) {
-        final boolean updated = routeService.update(routeList, id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> update(@PathVariable(name = "id") Long id, @RequestBody Route route) {
+        route.setRouteId(id);
+        final Route updated = routeService.update(route);
+        return new ResponseEntity<>(updated,HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/route/{id}")
