@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All flight and route</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+</head>
+<style>
+    table{
+        border-collapse: collapse;
+    }
+    table, td, th{
+        border: 1px solid #fff;
+        padding: 5px;
+    }
+    .my_button{
+        font-size: 14pt;
+        width: 400px;
+        height: 40px;
+    }
+</style>
+<body>
+    <div>
+        <table>
+            <td><form method="get" action="/show">
+                <button type="submit">back</button>
+            </form></td>
+            <td><form method="get" action="/route">
+                <button type="submit">all</button>
+            </form></td>
+        </table>
+    </div>
+
+    <table>
+        {{#routes}}
+            <tr>
+                <td>
+                    <b>Route Id:</b> <a href="/route/{{routeId}}">{{routeId}}</a><br>
+                    <b>Depart Point:</b> {{departPoint}}<br>
+                    <b>Arrival Point:</b> {{arrivalPoint}}<br>
+                </td>
+                <td></td>
+                <td><form method="get" action="/route">
+                    <button type="submit">update</button>
+                </form></td>
+                <td>
+                    <form method="get" action="/route/delete/{{routeId}}">
+                        <a href="/route">
+                            <button type="submit">delete</button>
+                        </a>
+                    </form>
+                </td>
+            </tr>
+        {{/routes}}
+    </table>
+    <br>
+
+    <div>
+        <form method="get" action="/route">
+            <button type="submit" class="my_button">Add</button>
+        </form>
+    </div>
+</body>
+</html>

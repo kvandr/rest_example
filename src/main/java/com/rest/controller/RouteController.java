@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
-@RestController
+@Controller
+@RequestMapping("/route")
 public class RouteController {
 
     private final RouteService routeService;
@@ -20,25 +23,28 @@ public class RouteController {
         this.routeService = routeService;
     }
 
-    @PostMapping(value = "/route")
+    @PostMapping
     public ResponseEntity<?> createRoute(@RequestBody Route routeList) {
         return new ResponseEntity<>(routeService.create(routeList), HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/route")
-    public ResponseEntity<?> readAll() {
+    @GetMapping
+    /*public ResponseEntity<?> readAll() {
         final List<Route> route = routeService.readAll();
         return new ResponseEntity<>(route, HttpStatus.OK);
+    }*/
+    public String readAll(Map<String, Object> model) {
+        model.put("routes", routeService.readAll());
+        return "route";
     }
 
-    @GetMapping(value = "/route/{id}")
-    public ResponseEntity<?> read(@PathVariable(name = "id") Long id) {
-        final Route route = routeService.read(id);
-        return new ResponseEntity<>(route, HttpStatus.OK);
+    @GetMapping(value = "/{id}")
+    public String read(@PathVariable(name = "id") Long id, Map<String, Object> model) {
+        model.put("routes", routeService.read(id));
+        return "route";
     }
 
-
-    @PutMapping(value = "/route/{id}",
+    @PostMapping(value = "/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,  //consumes принимает фиксируемый формат данных
             produces = MediaType.APPLICATION_JSON_VALUE)  //produces возвращает фиксируемый формат данных
     public ResponseEntity<?> update(@PathVariable(name = "id") Long id, @RequestBody Route route) {
@@ -47,11 +53,15 @@ public class RouteController {
         return new ResponseEntity<>(updated,HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/route/{id}")
-    public ResponseEntity<?> delete(@PathVariable(name = "id") Long id) {
-        final boolean deleted = routeService.delete(id);
-        return deleted
-                ? new ResponseEntity<>(HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+    @GetMapping(value = "/delete/{id}")
+    public String delete(@PathVariable(name = "id") Long id, Map<String, Object> model) {
+        model.put("routes", routeService.delete(id));
+        return "route";
     }
+
+    /*@DeleteMapping(value = "/{id}")
+    public String delete(@PathVariable(name = "id") Long id, Map<String, Object> model) {
+        model.put("routes", routeService.delete(id));
+        return "route";
+    }*/
 }

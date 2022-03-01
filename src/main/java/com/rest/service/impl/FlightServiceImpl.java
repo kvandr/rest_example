@@ -21,9 +21,7 @@ public class FlightServiceImpl implements FlightService{
     @Override
     public Flight createFlight(Flight flights) {
         flights.setRoute(routes.findByRouteId(flights.getRoute().getRouteId()));
-        flight.save(flights);
-        return flight.findByFlightId(flights.getFlightId());
-
+        return flight.save(flights);
     }
 
     @Override
@@ -39,13 +37,11 @@ public class FlightServiceImpl implements FlightService{
     @Override
     public Flight update(Flight flights) {
         flights.setRoute(routes.findByRouteId(flights.getRoute().getRouteId()));
-        flight.save(flights);
-        return flight.findByFlightId(flights.getFlightId());
+        return flight.save(flights);
     }
 
     @Override
     public boolean delete(Long id) {
-
         flight.delete(flight.findByFlightId(id));
         return true;
     }
@@ -57,7 +53,6 @@ public class FlightServiceImpl implements FlightService{
 
     @Override
     public Iterable<Flight> saveAll(Iterable<Flight> flightList) {
-
         return flight.saveAll(flightList);
     }
 

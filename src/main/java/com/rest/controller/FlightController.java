@@ -6,32 +6,31 @@ import com.rest.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
-@RestController
+@Controller
+@RequestMapping("/flight")
 public class FlightController {
 
     @Autowired
     private final FlightService flightService;
-    @Autowired
-    private final RouteService routeService;
 
 
     @Autowired
-    public FlightController(FlightService flightService, RouteService routeService) {
-
+    public FlightController(FlightService flightService) {
         this.flightService = flightService;
-        this.routeService = routeService;
     }
 
-    @PostMapping(value = "/flight")
+    @PostMapping(value = "/create")
     public ResponseEntity<?> createFlight (@RequestBody Flight flight) {
         return new ResponseEntity<>(flightService.createFlight(flight), HttpStatus.OK);
     }
 
-    @PutMapping(value = "/flight/{id}")
+    @PutMapping(value = "/{id}")
     public  ResponseEntity<?> update(@PathVariable(name = "id") Long id,
                                      @RequestBody Flight flight){
         flight.setFlightId(id);
@@ -39,21 +38,32 @@ public class FlightController {
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/flight")
-    public ResponseEntity<?> readAll() {
+    @GetMapping
+    /*public ResponseEntity<?> readAll() {
         final List<Flight> flights = flightService.readAll();
         return new ResponseEntity<>(flights, HttpStatus.OK);
+    }*/
+    public String readAll(Map<String, Object> model) {
+        model.put("flights", flightService.readAll());
+        return "flight";
     }
 
-    @GetMapping(value = "/flight/{id}")
-    public ResponseEntity<?> read(@PathVariable(name = "id") Long id) {
-        final Flight flight = flightService.read(id);
-        return new ResponseEntity<>(flight, HttpStatus.OK);
+
+    @GetMapping(value = "/{id}")
+    public String read(@PathVariable(name = "id") Long id, Map<String, Object> model) {
+        model.put("flights", flightService.read(id));
+        return "flight";
     }
 
-    @DeleteMapping(value = "/flight/{id}")
+    @GetMapping(value = "/delete/{id}")
+    public String delete(@PathVariable(name = "id") Long id, Map<String, Object> model) {
+        model.put("flights", flightService.delete(id));
+        return "flight";
+    }
+
+    /*@DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteId(@PathVariable(name = "id") Long id) {
         final boolean deleted = flightService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
+    }*/
 }
