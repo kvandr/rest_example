@@ -23,9 +23,13 @@ public class RouteController {
         this.routeService = routeService;
     }
 
-    @PostMapping
-    public ResponseEntity<?> createRoute(@RequestBody Route routeList) {
-        return new ResponseEntity<>(routeService.create(routeList), HttpStatus.CREATED);
+    @PostMapping(value = "/create")
+    public String createRoute(@RequestParam(name="departPoint") String departPoint,
+                              @RequestParam(name="arrivalPoint") String arrivalPoint,
+                              Map<String, Object> model) {
+        Route route = new Route(departPoint, arrivalPoint);
+        model.put("routes", routeService.create(route));
+        return "redirect:/route";
     }
 
     @GetMapping
@@ -38,25 +42,28 @@ public class RouteController {
         return "route";
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "oneRoute/{id}")
     public String read(@PathVariable(name = "id") Long id, Map<String, Object> model) {
         model.put("routes", routeService.read(id));
-        return "route";
+        return "oneRoute";
     }
 
-    @PostMapping(value = "/{id}",
-            consumes = MediaType.APPLICATION_JSON_VALUE,  //consumes принимает фиксируемый формат данных
-            produces = MediaType.APPLICATION_JSON_VALUE)  //produces возвращает фиксируемый формат данных
-    public ResponseEntity<?> update(@PathVariable(name = "id") Long id, @RequestBody Route route) {
-        route.setRouteId(id);
-        final Route updated = routeService.update(route);
-        return new ResponseEntity<>(updated,HttpStatus.OK);
+    @PostMapping(value = "/update")
+    public String update(@RequestParam(name = "routeId") Long routeId,
+                         @RequestParam(name="departPoint") String departPoint,
+                         @RequestParam(name="arrivalPoint") String arrivalPoint,
+                         Map<String, Object> model) {
+
+        Route route = new Route(departPoint, arrivalPoint);
+        route.setRouteId(routeId);
+        model.put("routes", routeService.update(route));
+        return "redirect:/route";
     }
 
     @GetMapping(value = "/delete/{id}")
     public String delete(@PathVariable(name = "id") Long id, Map<String, Object> model) {
         model.put("routes", routeService.delete(id));
-        return "route";
+        return "redirect:/route";
     }
 
     /*@DeleteMapping(value = "/{id}")

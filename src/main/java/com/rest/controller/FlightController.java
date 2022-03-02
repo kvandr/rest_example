@@ -1,6 +1,7 @@
 package com.rest.controller;
 
 import com.rest.model.Flight;
+import com.rest.model.Route;
 import com.rest.service.RouteService;
 import com.rest.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,23 +21,39 @@ public class FlightController {
     @Autowired
     private final FlightService flightService;
 
+    @Autowired
+    private final RouteService routeService;
 
     @Autowired
-    public FlightController(FlightService flightService) {
+    public FlightController(FlightService flightService, RouteService routeService) {
         this.flightService = flightService;
+        this.routeService = routeService;
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<?> createFlight (@RequestBody Flight flight) {
-        return new ResponseEntity<>(flightService.createFlight(flight), HttpStatus.OK);
+    public String createFlight (@RequestParam(name="airbus") String airbus,
+                                @RequestParam(name="route") Long route,
+                                @RequestParam(name="departTime") Date departTime,
+                                @RequestParam(name="arrivalTime") Date arrivalTime,
+                                Map<String, Object> model) {
+        Route routeList = routeService.read(route);
+        Flight flight = new Flight(airbus,routeList,departTime,arrivalTime);
+        model.put("flights", flightService.createFlight(flight));
+        return "redirect:/flight";
     }
 
-    @PutMapping(value = "/{id}")
-    public  ResponseEntity<?> update(@PathVariable(name = "id") Long id,
-                                     @RequestBody Flight flight){
-        flight.setFlightId(id);
-        final Flight updated = flightService.update(flight);
-        return new ResponseEntity<>(updated, HttpStatus.OK);
+    @PostMapping(value = "/update")
+    public String update(@RequestParam(name="flightId") Long flightId,
+                         @RequestParam(name="airbus") String airbus,
+                         @RequestParam(name="route") Long route,
+                         @RequestParam(name="departTime") Date departTime,
+                         @RequestParam(name="arrivalTime") Date arrivalTime,
+                         Map<String, Object> model){
+        Route routeList = routeService.read(route);
+        Flight flight = new Flight(airbus,routeList,departTime,arrivalTime);
+        flight.setFlightId(flightId);
+        model.put("flights", flightService.update(flight));
+        return "redirect:/flight";
     }
 
     @GetMapping
@@ -49,16 +67,16 @@ public class FlightController {
     }
 
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "oneFlight/{id}")
     public String read(@PathVariable(name = "id") Long id, Map<String, Object> model) {
         model.put("flights", flightService.read(id));
-        return "flight";
+        return "oneFlight";
     }
 
     @GetMapping(value = "/delete/{id}")
     public String delete(@PathVariable(name = "id") Long id, Map<String, Object> model) {
         model.put("flights", flightService.delete(id));
-        return "flight";
+        return "redirect:/flight";
     }
 
     /*@DeleteMapping(value = "/{id}")

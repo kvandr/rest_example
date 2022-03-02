@@ -10,7 +10,7 @@ import java.util.Map;
 
 
 @Controller
-@RequestMapping("/show")
+@RequestMapping("/")
 public class MainController {
 
     @Autowired

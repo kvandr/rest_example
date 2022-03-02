@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>All flight and route</title>
+    <title>Route</title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
 </head>
 <style>
@@ -21,10 +21,7 @@
 <body>
     <div>
         <table>
-            <td><form method="get" action="/show">
-                <button type="submit">back</button>
-            </form></td>
-            <td><form method="get" action="/route">
+            <td><form method="get" action="/">
                 <button type="submit">all</button>
             </form></td>
         </table>
@@ -34,12 +31,12 @@
         {{#routes}}
             <tr>
                 <td>
-                    <b>Route Id:</b> <a href="/route/{{routeId}}">{{routeId}}</a><br>
+                    <b>Route Id:</b> {{routeId}}<br>
                     <b>Depart Point:</b> {{departPoint}}<br>
                     <b>Arrival Point:</b> {{arrivalPoint}}<br>
                 </td>
                 <td></td>
-                <td><form method="get" action="/route">
+                <td><form method="get" action="/route/oneRoute/{{routeId}}">
                     <button type="submit">update</button>
                 </form></td>
                 <td>
@@ -55,8 +52,10 @@
     <br>
 
     <div>
-        <form method="get" action="/route">
-            <button type="submit" class="my_button">Add</button>
+        <form method="post" action="/route/create">
+            <input type="text" name="departPoint" placeholder="departPoint"/>
+            <input type="text" name="arrivalPoint" placeholder="arrivalPoint"/>
+            <a href="/route"><button type="submit">Add</button></a>
         </form>
     </div>
 </body>

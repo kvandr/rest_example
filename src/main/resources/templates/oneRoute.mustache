@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flight</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+</head>
+<style>
+    table{
+        border-collapse: collapse;
+    }
+    table, td, th{
+        border: 1px solid #fff;
+        padding: 5px;
+    }
+    .my_button{
+        font-size: 14pt;
+        width: 400px;
+        height: 40px;
+    }
+</style>
+    <body>
+        <div>
+            <table>
+                <td><form method="get" action="/route">
+                    <button type="submit">back</button>
+                </form></td>
+            </table>
+        </div>
+
+        <table>
+            {{#routes}}
+                <tr>
+                    <td>
+                        <b>Route Id:</b> {{routeId}}<br>
+                        <b>Depart Point:</b> {{departPoint}}<br>
+                        <b>Arrival Point:</b> {{arrivalPoint}}<br>
+                    </td>
+                </tr>
+            {{/routes}}
+        </table>
+        <br>
+
+        <div>
+            <form method="post" action="/route/update">
+                <input type="text" name="routeId" placeholder="routeId"/>
+                <input type="text" name="departPoint" placeholder="departPoint"/>
+                <input type="text" name="arrivalPoint" placeholder="arrivalPoint"/>
+                <a href="/route"><button type="submit">update</button></a>
+            </form>
+        </div>
+    </body>
+</html>

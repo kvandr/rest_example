@@ -22,8 +22,8 @@
 
     <div>
         <table>
-            <td><form method="get" action="/">
-                <button type="submit">all</button>
+            <td><form method="get" action="/flight">
+                <button type="submit">back</button>
             </form></td>
         </table>
     </div>
@@ -40,29 +40,19 @@
                    <b>Depart Time:</b> {{departTime}}<br>
                    <b>Travel Time:</b> {{travelTime}}
                </td>
-               <td></td>
-               <td><form method="get" action="/flight/oneFlight/{{flightId}}">
-                   <button type="submit">update</button>
-               </form></td>
-               <td>
-                   <form method="get" action="/flight/delete/{{flightId}}">
-                       <a href="/flight">
-                           <button type="submit">delete</button>
-                       </a>
-                   </form>
-               </td>
            </tr>
        {{/flights}}
     </table>
     <br>
 
     <div>
-        <form method="post" action="/flight/create">
+        <form method="post" action="/flight/update">
+            <input type="text" name="flightId" placeholder="flightId"/>
             <input type="text" name="airbus" placeholder="airbus"/>
             <input type="text" name="route" placeholder="route"/>
             <input type="date" name="departTime" placeholder="departTime"/>
             <input type="date" name="arrivalTime" placeholder="arrivalTime"/>
-            <a href="/flight"><button type="submit">Add</button></a>
+            <a href="/flight"><button type="submit">update</button></a>
         </form>
     </div>
 </body>
