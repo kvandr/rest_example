@@ -48,14 +48,13 @@ public class RouteController {
         return "oneRoute";
     }
 
-    @PostMapping(value = "/update")
-    public String update(@RequestParam(name = "routeId") Long routeId,
+    @PostMapping(value = "/update/{id}")
+    public String update(@PathVariable(name = "id") Long id,
                          @RequestParam(name="departPoint") String departPoint,
                          @RequestParam(name="arrivalPoint") String arrivalPoint,
                          Map<String, Object> model) {
 
-        Route route = new Route(departPoint, arrivalPoint);
-        route.setRouteId(routeId);
+        Route route = new Route(id, departPoint, arrivalPoint);
         model.put("routes", routeService.update(route));
         return "redirect:/route";
     }

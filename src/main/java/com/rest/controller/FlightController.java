@@ -42,16 +42,15 @@ public class FlightController {
         return "redirect:/flight";
     }
 
-    @PostMapping(value = "/update")
-    public String update(@RequestParam(name="flightId") Long flightId,
+    @PostMapping(value = "/update/{id}")
+    public String update(@PathVariable(name = "id") Long id,
                          @RequestParam(name="airbus") String airbus,
                          @RequestParam(name="route") Long route,
                          @RequestParam(name="departTime") Date departTime,
                          @RequestParam(name="arrivalTime") Date arrivalTime,
                          Map<String, Object> model){
         Route routeList = routeService.read(route);
-        Flight flight = new Flight(airbus,routeList,departTime,arrivalTime);
-        flight.setFlightId(flightId);
+        Flight flight = new Flight(id, airbus,routeList,departTime,arrivalTime);
         model.put("flights", flightService.update(flight));
         return "redirect:/flight";
     }

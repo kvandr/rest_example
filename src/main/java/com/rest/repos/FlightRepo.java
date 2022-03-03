@@ -16,6 +16,8 @@ public interface FlightRepo extends CrudRepository<Flight, Integer> {
 
     Flight findByFlightId(Long id);
 
+    List<Flight> findByAirbus(String airbus);
+
     List<Flight> findAll();
 
 }

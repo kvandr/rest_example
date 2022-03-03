@@ -36,17 +36,19 @@
                         <b>Arrival Point:</b> {{arrivalPoint}}<br>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <form method="post" action="/route/update/{{routeId}}">
+                            <input type="text" name="departPoint" placeholder="departPoint"/>
+                            <input type="text" name="arrivalPoint" placeholder="arrivalPoint"/>
+                            <a href="/route"><button type="submit">update</button></a>
+                        </form>
+                    </td>
+                </tr>
             {{/routes}}
         </table>
         <br>
 
-        <div>
-            <form method="post" action="/route/update">
-                <input type="text" name="routeId" placeholder="routeId"/>
-                <input type="text" name="departPoint" placeholder="departPoint"/>
-                <input type="text" name="arrivalPoint" placeholder="arrivalPoint"/>
-                <a href="/route"><button type="submit">update</button></a>
-            </form>
-        </div>
+
     </body>
 </html>

@@ -52,6 +52,11 @@ public class FlightServiceImpl implements FlightService{
     }
 
     @Override
+    public List<Flight> readAirbus(String search) {
+        return flight.findByAirbus(search);
+    }
+
+    @Override
     public Iterable<Flight> saveAll(Iterable<Flight> flightList) {
         return flight.saveAll(flightList);
     }

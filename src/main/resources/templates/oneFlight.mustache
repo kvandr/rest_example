@@ -41,19 +41,23 @@
                    <b>Travel Time:</b> {{travelTime}}
                </td>
            </tr>
+           <tr>
+               <td>
+                   <form method="post" action="/flight/update/{{flightId}}">
+                       <input type="text" name="airbus" placeholder="airbus"/>
+                       <input type="text" name="route" placeholder="route"/>
+                       <input type="date" name="departTime" placeholder="departTime"/>
+                       <input type="date" name="arrivalTime" placeholder="arrivalTime"/>
+                       <a href="/flight"><button type="submit">update</button></a>
+                   </form>
+               </td>
+           </tr>
        {{/flights}}
     </table>
     <br>
 
     <div>
-        <form method="post" action="/flight/update">
-            <input type="text" name="flightId" placeholder="flightId"/>
-            <input type="text" name="airbus" placeholder="airbus"/>
-            <input type="text" name="route" placeholder="route"/>
-            <input type="date" name="departTime" placeholder="departTime"/>
-            <input type="date" name="arrivalTime" placeholder="arrivalTime"/>
-            <a href="/flight"><button type="submit">update</button></a>
-        </form>
+
     </div>
 </body>
 </html>
