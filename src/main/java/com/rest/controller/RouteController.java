@@ -1,5 +1,6 @@
 package com.rest.controller;
 
+import com.rest.model.Flight;
 import com.rest.model.Route;
 import com.rest.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,18 @@ public class RouteController {
         Route route = new Route(id, departPoint, arrivalPoint);
         model.put("routes", routeService.update(route));
         return "redirect:/route";
+    }
+
+    @PostMapping(value="/filter")
+    public String filter(@RequestParam(name="filter") String filter, Map<String, Object> model)
+    {
+        Iterable<Route> routeList;
+        if (filter != null && !filter.isEmpty())
+            routeList = routeService.readSearch(filter);
+        else
+            routeList = routeService.readAll();
+        model.put("routes", routeList);
+        return "route";
     }
 
     @GetMapping(value = "/delete/{id}")

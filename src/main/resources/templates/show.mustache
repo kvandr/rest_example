@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All flight and route</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+</head>
+<style>
+    table{
+        border-collapse: collapse;
+    }
+    table, td, th{
+        border: 1px solid #fff;
+        padding: 5px;
+    }
+    .my_button{
+        font-size: 14pt;
+        width: 400px;
+        height: 40px;
+    }
+</style>
+    <body>
+        <div>
+            <table><td><form method="get" action="/flight">
+                <button type="submit">flight</button>
+            </form></td>
+            <td><form method="get" action="/route">
+                <button type="submit">route</button>
+            </form></td></table>
+        </div>
+
+        <table>
+           {{#flights}}
+               <tr>
+                   <td>
+                       <b>Id:</b> {{flightId}}<br>
+                       <b>Airbus:</b> {{airbus}}<br>
+                       {{#route}}
+                           <b>Route Id:</b> {{routeId}}<br>
+                           <b>Depart Point:</b> {{departPoint}}<br>
+                           <b>Arrival Point:</b> {{arrivalPoint}}<br>
+                       {{/route}}
+                       <b>Depart Time:</b> {{departTime}}<br>
+                       <b>Travel Time:</b> {{travelTime}}
+                   </td>
+               </tr>
+           {{/flights}}
+        </table>
+    </body>
+</html>

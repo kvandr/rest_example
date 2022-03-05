@@ -5,13 +5,10 @@ import com.rest.model.Route;
 import com.rest.service.RouteService;
 import com.rest.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -53,6 +50,18 @@ public class FlightController {
         Flight flight = new Flight(id, airbus,routeList,departTime,arrivalTime);
         model.put("flights", flightService.update(flight));
         return "redirect:/flight";
+    }
+
+    @PostMapping(value="/filter")
+    public String filter(@RequestParam(name="filter") String filter, Map<String, Object> model)
+    {
+        Iterable<Flight> flightList;
+        if (filter != null && !filter.isEmpty())
+            flightList = flightService.readFilter(filter);
+        else
+            flightList = flightService.readAll();
+        model.put("flights", flightList);
+        return "flight";
     }
 
     @GetMapping

@@ -52,7 +52,7 @@ public class FlightServiceImpl implements FlightService{
     }
 
     @Override
-    public List<Flight> readAirbus(String search) {
+    public List<Flight> readFilter(String search) {
         return flight.findByAirbus(search);
     }
 

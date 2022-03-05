@@ -16,7 +16,7 @@ public interface FlightService {
 
     List<Flight> readSearch(String search);
 
-    List<Flight> readAirbus(String search);
+    List<Flight> readFilter(String search);
 
     Iterable<Flight> saveAll(Iterable<Flight> flightList);
 
