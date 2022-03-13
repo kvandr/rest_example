@@ -1,5 +1,6 @@
 package com.rest.service;
 
+import com.rest.model.Flight;
 import com.rest.model.Route;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface RouteService {
     boolean delete(Long id);
 
     List<Route> readSearch(String search);
+
+    void deleteAll(Iterable<Route> routeList);
 }

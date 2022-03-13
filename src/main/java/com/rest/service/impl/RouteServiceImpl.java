@@ -1,5 +1,6 @@
 package com.rest.service.impl;
 
+import com.rest.model.Flight;
 import com.rest.model.Route;
 import com.rest.repos.RouteRepo;
 import com.rest.service.RouteService;
@@ -41,6 +42,11 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public List<Route> readSearch(String search) {
         return routes.findByDepartPointOrArrivalPoint(search);
+    }
+
+    @Override
+    public void deleteAll(Iterable<Route> routeList) {
+        routes.deleteAll(routeList);
     }
 
 }

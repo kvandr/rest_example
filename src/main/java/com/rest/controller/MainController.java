@@ -56,8 +56,11 @@ public class MainController {
             e.printStackTrace();
         }
         if (list != null) {
-            //flightService.deleteAll(flightService.readAll());
-            flightService.saveAll(list);
+            flightService.deleteAll(flightService.readAll());
+            routeService.deleteAll(routeService.readAll());
+            for (Flight flight : list) {
+                flightService.createFlight(flight);
+            }
         }
         return "redirect:/";
     }

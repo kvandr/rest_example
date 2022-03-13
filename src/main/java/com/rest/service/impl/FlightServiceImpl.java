@@ -1,6 +1,7 @@
 package com.rest.service.impl;
 
 import com.rest.model.Flight;
+import com.rest.model.Route;
 import com.rest.repos.FlightRepo;
 import com.rest.repos.RouteRepo;
 import com.rest.service.FlightService;
@@ -18,7 +19,24 @@ public class FlightServiceImpl implements FlightService{
 
     @Override
     public Flight createFlight(Flight flights) {
-        flights.setRoute(routes.findByRouteId(flights.getRoute().getRouteId()));
+        if (routes.findByRouteId(flights.getRoute().getRouteId())!=null)
+            flights.setRoute(routes.findByRouteId(flights.getRoute().getRouteId()));
+        else
+        {
+            if (routes.findByDepartPointOrArrivalPoint(flights.getRoute().getDepartPoint())!=null) {
+                for (Route route : routes.findByDepartPointOrArrivalPoint(flights.getRoute().getDepartPoint())){
+                    if (route.getDepartPoint().equals(flights.getRoute().getDepartPoint()) &&
+                            route.getArrivalPoint().equals(flights.getRoute().getArrivalPoint()))
+                    {
+                        flights.setRoute(route);
+                    }
+                }
+            }
+            else{
+                flights.setRoute(new Route(flights.getRoute().getDepartPoint(),
+                    flights.getRoute().getArrivalPoint()));
+            }
+        }
         return flight.save(flights);
     }
 
