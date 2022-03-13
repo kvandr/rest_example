@@ -42,4 +42,5 @@ public class RouteServiceImpl implements RouteService {
     public List<Route> readSearch(String search) {
         return routes.findByDepartPointOrArrivalPoint(search);
     }
+
 }

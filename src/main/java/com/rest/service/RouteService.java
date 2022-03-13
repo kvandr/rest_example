@@ -1,6 +1,5 @@
 package com.rest.service;
 
-
 import com.rest.model.Route;
 
 import java.util.List;

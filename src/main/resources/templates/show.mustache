@@ -19,14 +19,14 @@
     }
 </style>
     <body>
-        <div>
-            <table><td><form method="get" action="/flight">
+        <table>
+            <td><form method="get" action="/flight">
                 <button type="submit">flight</button>
             </form></td>
             <td><form method="get" action="/route">
                 <button type="submit">route</button>
-            </form></td></table>
-        </div>
+            </form></td>
+        </table>
 
         <table>
            {{#flights}}
@@ -44,6 +44,17 @@
                    </td>
                </tr>
            {{/flights}}
+        </table>
+        <table>
+            <td><form method="post" action="/load" enctype="multipart/form-data">
+                <input type="file" name="file"/>
+                <button type="submit">Import</button>
+            </form></td>
+        </table>
+        <table>
+            <td><form method="get" action="/">
+                <button class="my_button">Export</button>
+            </form></td>
         </table>
     </body>
 </html>
