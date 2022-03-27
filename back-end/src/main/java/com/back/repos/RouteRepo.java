@@ -1,6 +1,6 @@
-package com.rest.repos;
+package com.back.repos;
 
-import com.rest.model.Route;
+import com.back.model.Route;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

@@ -1,7 +1,6 @@
-package com.rest.service;
+package com.back.service;
 
-import com.rest.model.Flight;
-import com.rest.model.Route;
+import com.back.model.Route;
 
 import java.util.List;
 

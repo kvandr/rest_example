@@ -1,7 +1,7 @@
-package com.rest.repos;
+package com.back.repos;
 
 
-import com.rest.model.Flight;
+import com.back.model.Flight;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

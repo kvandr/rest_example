@@ -1,7 +1,7 @@
-package com.rest.controller;
+package com.front.controller;
 
-import com.rest.model.Route;
-import com.rest.service.RouteService;
+import com.back.model.Route;
+import com.back.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

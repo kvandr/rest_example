@@ -1,10 +1,10 @@
-package com.rest.service.impl;
+package com.back.service.impl;
 
-import com.rest.model.Flight;
-import com.rest.model.Route;
-import com.rest.repos.FlightRepo;
-import com.rest.repos.RouteRepo;
-import com.rest.service.FlightService;
+import com.back.model.Flight;
+import com.back.model.Route;
+import com.back.repos.FlightRepo;
+import com.back.repos.RouteRepo;
+import com.back.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
-package com.rest.service;
+package com.back.service;
 
-import com.rest.model.Flight;
+import com.back.model.Flight;
 
 import java.util.List;
 

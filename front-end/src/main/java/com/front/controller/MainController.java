@@ -1,12 +1,12 @@
-package com.rest.controller;
+package com.front.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.rest.model.Flight;
-import com.rest.service.FlightService;
+import com.back.model.Flight;
+import com.back.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
