@@ -1,13 +1,18 @@
 version: '3.1'
 services:
+  front:
+    container_name: web-postgresql
+      build: ./front-end/
+      ports:
+        - "8081:8081"
+      depends_on:
+        - back
 
-  app:
+  back:
     container_name: springboot-postgresql
-    build: ./
+    build: ./back-end/
     environment:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/FlightAndRoute"
-    ports:
-      - "8081:8081"
     depends_on:
       - postgresqldb
 
