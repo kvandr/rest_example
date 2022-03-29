@@ -73,7 +73,7 @@ public class MainController {
 
         List<Flight> flightList = flightService.readAll();
 
-        File file = new File("src/main/resources/jsonBD/FlightAndRoute.json");
+        File file = new File("front-end/src/main/resources/jsonBD/FlightAndRoute.json");
 
         TypeReference <List<Flight>> typeReference = new TypeReference<List<Flight>>() {};
         mapper.writerFor(typeReference).writeValue(new FileOutputStream(file), flightList);
