@@ -1,7 +1,7 @@
 package com.front.controller;
 
-import com.back.model.Route;
-import com.back.service.RouteService;
+import com.front.model.Route;
+import com.front.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +29,6 @@ public class RouteController {
     }
 
     @GetMapping
-    /*public ResponseEntity<?> readAll() {
-        final List<Route> route = routeService.readAll();
-        return new ResponseEntity<>(route, HttpStatus.OK);
-    }*/
     public String readAll(Map<String, Object> model) {
         model.put("routes", routeService.readAll());
         return "route";
@@ -72,10 +68,4 @@ public class RouteController {
         model.put("routes", routeService.delete(id));
         return "redirect:/route";
     }
-
-    /*@DeleteMapping(value = "/{id}")
-    public String delete(@PathVariable(name = "id") Long id, Map<String, Object> model) {
-        model.put("routes", routeService.delete(id));
-        return "route";
-    }*/
 }

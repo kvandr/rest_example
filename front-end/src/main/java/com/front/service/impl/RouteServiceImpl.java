@@ -1,8 +1,8 @@
-package com.back.service.impl;
+package com.front.service.impl;
 
-import com.back.model.Route;
-import com.back.repos.RouteRepo;
-import com.back.service.RouteService;
+import com.front.model.Route;
+import com.front.repos.RouteRepo;
+import com.front.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,25 +28,19 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public boolean update(Route route) {
-        routes.save(route);
-        return true;
+    public Route update(Route route) {
+        return routes.save(route);
     }
 
     @Override
     public boolean delete(Long id) {
-        routes.delete(routes.findByRouteId(id));
+        routes.delete(id);
         return true;
     }
 
     @Override
     public List<Route> readSearch(String search) {
         return routes.findByDepartPointOrArrivalPoint(search);
-    }
-
-    @Override
-    public void deleteAll(Iterable<Route> routeList) {
-        routes.deleteAll(routeList);
     }
 
 }

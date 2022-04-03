@@ -1,6 +1,6 @@
-package com.back.service;
+package com.front.service;
 
-import com.back.model.Route;
+import com.front.model.Route;
 
 import java.util.List;
 
@@ -11,11 +11,10 @@ public interface RouteService {
 
     Route read(Long id);
 
-    boolean update(Route route);
+    Route update(Route route);
 
     boolean delete(Long id);
 
     List<Route> readSearch(String search);
 
-    void deleteAll(Iterable<Route> routeList);
 }
