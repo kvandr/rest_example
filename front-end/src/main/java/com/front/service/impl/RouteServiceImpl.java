@@ -1,7 +1,7 @@
 package com.front.service.impl;
 
 import com.front.model.Route;
-import com.front.repos.RouteRepo;
+import com.front.repos.RouteClients;
 import com.front.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class RouteServiceImpl implements RouteService {
     @Autowired
-    RouteRepo routes;
+    RouteClients routes;
     @Override
     public Route create(Route route) {
         return routes.save(route);

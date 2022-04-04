@@ -1,16 +1,19 @@
-package com.front.repos;
+package com.front.repos.impl;
 
 
 import com.front.model.Flight;
+import com.front.repos.FlightClients;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-public class FlightRepo {
+@Service
+public class FlightRepoImpl implements FlightClients {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${remote.storage.url}")

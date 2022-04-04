@@ -1,7 +1,5 @@
 package com.front.controller;
 
-
-
 import com.front.model.Flight;
 import com.front.model.Route;
 import com.front.service.FlightService;

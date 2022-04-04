@@ -2,8 +2,8 @@ package com.front.service.impl;
 
 import com.front.model.Flight;
 import com.front.model.Route;
-import com.front.repos.FlightRepo;
-import com.front.repos.RouteRepo;
+import com.front.repos.FlightClients;
+import com.front.repos.RouteClients;
 import com.front.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +13,9 @@ import java.util.List;
 @Service
 public class FlightServiceImpl implements FlightService {
     @Autowired
-    FlightRepo flight;
+    FlightClients flight;
     @Autowired
-    RouteRepo routes;
+    RouteClients routes;
 
     @Override
     public Flight createFlight(Flight flights) {

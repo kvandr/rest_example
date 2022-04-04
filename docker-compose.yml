@@ -2,19 +2,24 @@ version: '3.1'
 services:
   front:
     container_name: web-postgresql
-      build: ./front-end/
-      ports:
-        - "8081:8081"
-      depends_on:
-        - back
+    build: ./front-end
+    environment:
+      REMOTE_STORAGE_URL: "http://springboot-postgresql:8081"
+    ports:
+      - "8082:8082"
+    depends_on:
+      - back
 
   back:
     container_name: springboot-postgresql
-    build: ./back-end/
+    build: ./back-end
     environment:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/FlightAndRoute"
+    ports:
+      - "8081:8080"
     depends_on:
       - postgresqldb
+    restart: always
 
   postgresqldb:
     container_name: db
