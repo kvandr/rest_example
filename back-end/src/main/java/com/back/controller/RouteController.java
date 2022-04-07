@@ -38,7 +38,7 @@ public class RouteController {
         return new ResponseEntity<>(routes, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/route/{param}")
+    @GetMapping(value = "/routeSearch/{param}")
     public ResponseEntity<?> search(@PathVariable(name = "param") String param) {
         final List <Route> routes = routeService.readSearch(param);
         return new ResponseEntity<>(routes, HttpStatus.OK);

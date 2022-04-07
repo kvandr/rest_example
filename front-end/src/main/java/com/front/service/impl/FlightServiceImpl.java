@@ -1,9 +1,8 @@
 package com.front.service.impl;
 
 import com.front.model.Flight;
-import com.front.model.Route;
-import com.front.repos.FlightClients;
-import com.front.repos.RouteClients;
+import com.front.repos.FlightClient;
+import com.front.repos.RouteClient;
 import com.front.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,31 +12,12 @@ import java.util.List;
 @Service
 public class FlightServiceImpl implements FlightService {
     @Autowired
-    FlightClients flight;
+    FlightClient flight;
     @Autowired
-    RouteClients routes;
+    RouteClient routes;
 
     @Override
     public Flight createFlight(Flight flights) {
-        if (flights.getRoute() != null) {
-            if (routes.findByRouteId(flights.getRoute().getRouteId()) != null)
-                flights.setRoute(routes.findByRouteId(flights.getRoute().getRouteId()));
-            else {
-                if (routes.findByDepartPointOrArrivalPoint(flights.getRoute().getDepartPoint()) != null) {
-                    for (Route route : routes.findByDepartPointOrArrivalPoint(flights.getRoute().getDepartPoint())) {
-                        if (route.getDepartPoint().equals(flights.getRoute().getDepartPoint()) &&
-                                route.getArrivalPoint().equals(flights.getRoute().getArrivalPoint())) {
-                            flights.setRoute(route);
-                        }
-                    }
-                } else {
-                    if (flights.getRoute().getDepartPoint() != null && flights.getRoute().getArrivalPoint() != null) {
-                        flights.setRoute(new Route(flights.getRoute().getDepartPoint(),
-                                flights.getRoute().getArrivalPoint()));
-                    }
-                }
-            }
-        }
         return flight.save(flights);
     }
 
@@ -52,9 +32,8 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Flight update(Flight flights) {
-        flights.setRoute(routes.findByRouteId(flights.getRoute().getRouteId()));
-        return flight.save(flights);
+    public void update(Flight flights) {
+        flight.update(flights);
     }
 
     @Override

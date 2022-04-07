@@ -43,11 +43,10 @@ public class RouteController {
     @PostMapping(value = "/update/{id}")
     public String update(@PathVariable(name = "id") Long id,
                          @RequestParam(name="departPoint") String departPoint,
-                         @RequestParam(name="arrivalPoint") String arrivalPoint,
-                         Map<String, Object> model) {
+                         @RequestParam(name="arrivalPoint") String arrivalPoint) {
 
         Route route = new Route(id, departPoint, arrivalPoint);
-        model.put("routes", routeService.update(route));
+        routeService.update(route);
         return "redirect:/route";
     }
 

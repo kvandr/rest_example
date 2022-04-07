@@ -28,8 +28,8 @@ public class FlightController {
     }
 
     @PostMapping(value = "/flight")
-    public ResponseEntity<?> createFlight (@RequestBody Flight flightList) {
-        return new ResponseEntity<>(flightService.createFlight(flightList), HttpStatus.OK);
+    public ResponseEntity<?> createFlight (@RequestBody Flight flight) {
+        return new ResponseEntity<>(flightService.createFlight(flight), HttpStatus.OK);
     }
 
     @PutMapping("/flight/{id}")

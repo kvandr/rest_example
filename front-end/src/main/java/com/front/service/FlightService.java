@@ -11,7 +11,7 @@ public interface FlightService {
 
     Flight read(Long id);
 
-    Flight update(Flight flight);
+    void update(Flight flight);
 
     boolean delete(Long id);
 

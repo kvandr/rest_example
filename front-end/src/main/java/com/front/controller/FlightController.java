@@ -44,11 +44,10 @@ public class FlightController {
                          @RequestParam(name="airbus") String airbus,
                          @RequestParam(name="route") Long route,
                          @RequestParam(name="departTime") Date departTime,
-                         @RequestParam(name="arrivalTime") Date arrivalTime,
-                         Map<String, Object> model){
+                         @RequestParam(name="arrivalTime") Date arrivalTime){
         Route routeList = routeService.read(route);
         Flight flight = new Flight(id, airbus,routeList,departTime,arrivalTime);
-        model.put("flights", flightService.update(flight));
+        flightService.update(flight);
         return "redirect:/flight";
     }
 

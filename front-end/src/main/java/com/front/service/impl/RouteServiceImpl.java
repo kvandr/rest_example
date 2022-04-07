@@ -1,7 +1,7 @@
 package com.front.service.impl;
 
 import com.front.model.Route;
-import com.front.repos.RouteClients;
+import com.front.repos.RouteClient;
 import com.front.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class RouteServiceImpl implements RouteService {
     @Autowired
-    RouteClients routes;
+    RouteClient routes;
     @Override
     public Route create(Route route) {
         return routes.save(route);
@@ -28,8 +28,8 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public Route update(Route route) {
-        return routes.save(route);
+    public void update(Route route) {
+        routes.update(route);
     }
 
     @Override

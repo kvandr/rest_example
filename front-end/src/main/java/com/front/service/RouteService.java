@@ -11,7 +11,7 @@ public interface RouteService {
 
     Route read(Long id);
 
-    Route update(Route route);
+    void update(Route route);
 
     boolean delete(Long id);
 

@@ -1,14 +1,10 @@
 package com.front.model;
 
-
 import lombok.Data;
-
 import java.util.Objects;
-
 
 @Data
 public class Route {
-
 
     private Long routeId;
 
