@@ -57,8 +57,6 @@ public class RouteController {
     @DeleteMapping(value = "/route/{id}")
     public ResponseEntity<?> delete(@PathVariable(name = "id") Long id) {
         final boolean deleted = routeService.delete(id);
-        return deleted
-                ? new ResponseEntity<>(HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

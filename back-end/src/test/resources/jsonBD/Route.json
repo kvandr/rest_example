@@ -1,0 +1,17 @@
+[
+  {"routeId":1,
+  "departPoint":"Samara",
+  "arrivalPoint":"Moskva"},
+  {"routeId":2,
+    "departPoint":"Syzran",
+    "arrivalPoint":"Ryzan"},
+  {"routeId":3,
+    "departPoint":"Piter",
+    "arrivalPoint":"Beluga"},
+  {"routeId":4,
+    "departPoint":"Lubinsk",
+    "arrivalPoint":"Rostov"},
+  {"routeId":5,
+    "departPoint":"Samara",
+    "arrivalPoint":"Ryzan"}
+]

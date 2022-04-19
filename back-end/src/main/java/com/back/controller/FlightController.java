@@ -33,7 +33,7 @@ public class FlightController {
     }
 
     @PutMapping("/flight/{id}")
-    public  ResponseEntity<?> saveAll(@RequestBody Flight flightList){
+    public  ResponseEntity<?> update(@RequestBody Flight flightList){
         return new ResponseEntity<>(flightService.update(flightList), HttpStatus.OK);
     }
 
