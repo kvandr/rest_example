@@ -1,41 +1,33 @@
 package com.back.controller;
 
 import com.back.RestExampleApplication;
-import com.back.model.Flight;
 import com.back.model.Route;
 import com.back.service.RouteService;
-import com.back.service.impl.RouteServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -46,12 +38,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         classes = RestExampleApplication.class
 )
 @AutoConfigureMockMvc
+@Slf4j
 class RouteControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Autowired
     private RouteService routeService;
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting()
@@ -60,21 +53,20 @@ class RouteControllerTest {
 
     @BeforeEach
     public void setup() throws Exception {
-        System.out.println("startup - creating DB connection");
+        log.info("startup - creating DB connection");
         BufferedReader reader;
-        List<Route> list = new ArrayList<>();
         Type itemsListType = new TypeToken<List<Route>>() {
         }.getType();
-        try {
-            reader = new BufferedReader(new FileReader("src/test/resources/jsonBD/Route.json"));
-            list = GSON.fromJson(reader, itemsListType);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        if (list == null) list = new ArrayList<>();
+        reader = new BufferedReader(new InputStreamReader(new ClassPathResource("jsonBD/Route.json").getInputStream()));
+        List<Route> list = GSON.fromJson(reader, itemsListType);
+        log.info(String.valueOf(list));
         for (Route route : list) {
             routeService.create(route);
+            log.info(String.valueOf(routeService.create(route)));
+            log.info(String.valueOf(route));
         }
+        list = routeService.readAll();
+        log.info(String.valueOf(list));
     }
 
     @Test
@@ -117,13 +109,13 @@ class RouteControllerTest {
     @Test
     void update() throws Exception {
         Long id = 1L;
-        mockMvc.perform( MockMvcRequestBuilders
-                        .put("/route/{id}", id)
+        mockMvc.perform( MockMvcRequestBuilders.put("/route/{id}", id)
                         .content(asJsonString(new Route(2L,"Samara","Moscow")))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andReturn();
     }
 
     @Test
@@ -143,6 +135,6 @@ class RouteControllerTest {
 
     @AfterEach
     public void tearDown() {
-        System.out.println("closing DB connection");
+        log.info("closing DB connection");
     }
 }

@@ -5,10 +5,12 @@ import com.back.model.Flight;
 import com.back.model.Route;
 import com.back.service.FlightService;
 import com.back.service.RouteService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,6 +28,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,15 +45,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         classes = RestExampleApplication.class
 )
 @AutoConfigureMockMvc
-
+@Slf4j
 class FlightControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Autowired
     private FlightService flightService;
 
-    @MockBean
+    @Autowired
     private RouteService routeService;
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting()
@@ -58,21 +62,20 @@ class FlightControllerTest {
 
     @BeforeEach
     public void setup() throws Exception {
-        System.out.println("startup - creating DB connection");
+        log.info("startup - creating DB connection");
         BufferedReader reader;
-        List<Flight> list = new ArrayList<>();
         Type itemsListType = new TypeToken<List<Flight>>() {
         }.getType();
-        try {
-            reader = new BufferedReader(new FileReader("src/test/resources/jsonBD/FlightAndRoute.json"));
-            list = GSON.fromJson(reader, itemsListType);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        reader = new BufferedReader(new InputStreamReader(new ClassPathResource("jsonBD/FlightAndRoute.json").getInputStream()));
+        List<Flight> list = GSON.fromJson(reader, itemsListType);
+        log.info(String.valueOf(list));
         if (list == null) list = new ArrayList<>();
         for (Flight flight : list) {
             flightService.createFlight(flight);
+            log.info(String.valueOf(flight));
         }
+        list = flightService.readAll();
+        log.info(String.valueOf(list));
     }
 
     @Test
@@ -86,7 +89,6 @@ class FlightControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                //.andExpect(status().isCreated())
                 .andExpect(status().isOk());
     }
 
@@ -102,7 +104,6 @@ class FlightControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                //.andExpect(status().isCreated())
                 .andExpect(status().isOk());
     }
 
@@ -150,16 +151,12 @@ class FlightControllerTest {
     }
 
 
-    public static String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public static String asJsonString(final Object obj) throws JsonProcessingException {
+        return new ObjectMapper().writeValueAsString(obj);
     }
 
     @AfterEach
     public void tearDown() {
-        System.out.println("closing DB connection");
+        log.info("closing DB connection");
     }
 }

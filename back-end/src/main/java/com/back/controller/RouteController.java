@@ -3,6 +3,7 @@ package com.back.controller;
 
 import com.back.model.Route;
 import com.back.service.RouteService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 public class RouteController {
 
@@ -51,7 +51,7 @@ public class RouteController {
     public ResponseEntity<?> update(@PathVariable(name = "id") Long id,
                                     @RequestBody Route route) {
         final boolean updated = routeService.update(route);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(routeService.readAll(), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/route/{id}")
