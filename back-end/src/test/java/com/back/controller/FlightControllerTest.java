@@ -68,14 +68,11 @@ class FlightControllerTest {
         }.getType();
         reader = new BufferedReader(new InputStreamReader(new ClassPathResource("jsonBD/FlightAndRoute.json").getInputStream()));
         List<Flight> list = GSON.fromJson(reader, itemsListType);
-        log.info(String.valueOf(list));
         if (list == null) list = new ArrayList<>();
         for (Flight flight : list) {
             flightService.createFlight(flight);
-            log.info(String.valueOf(flight));
         }
         list = flightService.readAll();
-        log.info(String.valueOf(list));
     }
 
     @Test
@@ -144,7 +141,7 @@ class FlightControllerTest {
 
     @Test
     void deleteId() throws Exception {
-        Long id = 1L;
+        Long id = 2L;
         mockMvc.perform(MockMvcRequestBuilders.delete("/flight/{id}",id))
                 .andDo(print())
                 .andExpect(status().isOk());

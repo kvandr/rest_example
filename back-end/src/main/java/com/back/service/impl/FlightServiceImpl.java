@@ -32,7 +32,8 @@ public class FlightServiceImpl implements FlightService{
                     }
                 } else {
                     if (flights.getRoute().getDepartPoint() != null && flights.getRoute().getArrivalPoint() != null) {
-                        flights.setRoute(new Route(flights.getRoute().getDepartPoint(),
+                        flights.setRoute(new Route(flights.getRoute().getRouteId(),
+                                flights.getRoute().getDepartPoint(),
                                 flights.getRoute().getArrivalPoint()));
                     }
                 }
@@ -59,6 +60,7 @@ public class FlightServiceImpl implements FlightService{
 
     @Override
     public boolean delete(Long id) {
+        flight.findByFlightId(id).setRoute(null);
         flight.delete(flight.findByFlightId(id));
         return true;
     }
