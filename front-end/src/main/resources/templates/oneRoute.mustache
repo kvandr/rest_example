@@ -19,9 +19,17 @@
     }
 </style>
     <body>
+
+        <div>
+            <form action="/logout" method="post">
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+                <input type="submit" value="Sign Out"/>
+            </form>
+        </div>
         <div>
             <table>
                 <td><form method="get" action="/route">
+                    <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
                     <button type="submit">back</button>
                 </form></td>
             </table>
@@ -39,6 +47,7 @@
                 <tr>
                     <td>
                         <form method="post" action="/route/update/{{routeId}}">
+                            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
                             <input type="text" name="departPoint" placeholder="departPoint"/>
                             <input type="text" name="arrivalPoint" placeholder="arrivalPoint"/>
                             <a href="/route"><button type="submit">update</button></a>

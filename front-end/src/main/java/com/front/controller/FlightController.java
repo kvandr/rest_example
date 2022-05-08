@@ -2,9 +2,11 @@ package com.front.controller;
 
 import com.front.model.Flight;
 import com.front.model.Route;
+import com.front.model.User;
 import com.front.service.FlightService;
 import com.front.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,9 +34,10 @@ public class FlightController {
                                 @RequestParam(name="route") Long route,
                                 @RequestParam(name="departTime") Date departTime,
                                 @RequestParam(name="arrivalTime") Date arrivalTime,
+                                @AuthenticationPrincipal User user,
                                 Map<String, Object> model) {
         Route routeList = routeService.read(route);
-        Flight flight = new Flight(airbus,routeList,departTime,arrivalTime);
+        Flight flight = new Flight(airbus,routeList,departTime,arrivalTime, user);
         model.put("flights", flightService.createFlight(flight));
         return "redirect:/flight";
     }
@@ -44,9 +47,10 @@ public class FlightController {
                          @RequestParam(name="airbus") String airbus,
                          @RequestParam(name="route") Long route,
                          @RequestParam(name="departTime") Date departTime,
-                         @RequestParam(name="arrivalTime") Date arrivalTime){
+                         @RequestParam(name="arrivalTime") Date arrivalTime,
+                         @AuthenticationPrincipal User user){
         Route routeList = routeService.read(route);
-        Flight flight = new Flight(id, airbus,routeList,departTime,arrivalTime);
+        Flight flight = new Flight(id, airbus,routeList,departTime,arrivalTime, user);
         flightService.update(flight);
         return "redirect:/flight";
     }

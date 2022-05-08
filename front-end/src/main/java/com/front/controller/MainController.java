@@ -41,12 +41,17 @@ public class MainController {
     public MainController(FlightService flightService){ this.flightService = flightService; }
 
     @GetMapping
+    public String read(Map<String, Object> model) {
+        return "main";
+    }
+
+    @GetMapping(value = "main")
     public String readAll(Map<String, Object> model) {
         model.put("flights", flightService.readAll());
         return "show";
     }
 
-    @RequestMapping(value = "/load", method = RequestMethod.POST)
+    @RequestMapping(value = "main/load", method = RequestMethod.POST)
     public String uploadJsonFile(@RequestParam("file") MultipartFile file, Map<String, Object> model) {
         BufferedReader reader;
         List<Flight> list = new ArrayList<>();
@@ -69,7 +74,7 @@ public class MainController {
     }
 
     @Transactional
-    @RequestMapping(value = "/download")
+    @RequestMapping(value = "main/download")
     public ResponseEntity<Resource> downloadJsonFile() throws IOException {
 
         List<Flight> flightList = flightService.readAll();

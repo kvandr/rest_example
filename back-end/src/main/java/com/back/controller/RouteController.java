@@ -28,20 +28,17 @@ public class RouteController {
 
     @GetMapping(value = "/route")
     public ResponseEntity<?> readAll() {
-        final List<Route> routes = routeService.readAll();
-        return new ResponseEntity<>(routes, HttpStatus.OK);
+        return new ResponseEntity<>(routeService.readAll(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/route/{id}")
     public ResponseEntity<?> read(@PathVariable(name = "id") Long id) {
-        final Route routes = routeService.read(id);
-        return new ResponseEntity<>(routes, HttpStatus.OK);
+        return new ResponseEntity<>(routeService.read(id), HttpStatus.OK);
     }
 
     @GetMapping(value = "/routeSearch/{param}")
     public ResponseEntity<?> search(@PathVariable(name = "param") String param) {
-        final List <Route> routes = routeService.readSearch(param);
-        return new ResponseEntity<>(routes, HttpStatus.OK);
+        return new ResponseEntity<>(routeService.readSearch(param), HttpStatus.OK);
     }
 
 
@@ -50,13 +47,13 @@ public class RouteController {
             produces = MediaType.APPLICATION_JSON_VALUE)  //produces возвращает фиксируемый формат данных
     public ResponseEntity<?> update(@PathVariable(name = "id") Long id,
                                     @RequestBody Route route) {
-        final boolean updated = routeService.update(route);
-        return new ResponseEntity<>(routeService.readAll(), HttpStatus.OK);
+        routeService.update(route);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/route/{id}")
     public ResponseEntity<?> delete(@PathVariable(name = "id") Long id) {
-        final boolean deleted = routeService.delete(id);
+        routeService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

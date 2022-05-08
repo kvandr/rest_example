@@ -2,6 +2,7 @@ package com.back.service.impl;
 
 import com.back.model.Flight;
 import com.back.model.Route;
+import com.back.model.User;
 import com.back.repos.FlightRepo;
 import com.back.repos.RouteRepo;
 import com.back.service.FlightService;
@@ -16,6 +17,13 @@ public class FlightServiceImpl implements FlightService{
     FlightRepo flight;
     @Autowired
     RouteRepo routes;
+
+    @Override
+    public void create(Flight flights, Route route, User user){
+        flights.setRoute(route);
+        flights.setUser(user);
+        flight.save(flights);
+    }
 
     @Override
     public Flight createFlight(Flight flights) {
@@ -45,6 +53,16 @@ public class FlightServiceImpl implements FlightService{
     @Override
     public List<Flight> readAll() {
         return flight.findAll();
+    }
+
+    @Override
+    public List<Flight> readByUser(User user) {
+        return flight.findByUserId(user.getId());
+    }
+
+    @Override
+    public List<Flight> readByUserAndSearch(User user, String search) {
+        return flight.findByAirbusOrRouteOrDepartTimeOrTravelTimeAndUserId(search,user.getId());
     }
 
     @Override

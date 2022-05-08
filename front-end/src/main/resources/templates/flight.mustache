@@ -19,18 +19,26 @@
     }
 </style>
 <body>
-
+    <div>
+        <form action="/logout" method="post">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
 
     <table>
-        <td><form method="get" action="/">
+        <td><form method="get" action="/main">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
             <button type="submit">back</button>
         </form></td>
         <td><form method="get" action="/flight">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
             <button type="submit">all</button>
         </form></td>
     </table>
     <table>
         <td><form method="post" action="/flight/filter">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
             <input type="text" name="filter" placeholder="Airbus">
             <button type="submit">Find</button>
         </form></td>
@@ -50,10 +58,12 @@
                </td>
                <td></td>
                <td><form method="get" action="/flight/oneFlight/{{flightId}}">
+                   <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
                    <button type="submit">update</button>
                </form></td>
                <td>
                    <form method="get" action="/flight/delete/{{flightId}}">
+                       <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
                        <a href="/flight">
                            <button type="submit">delete</button>
                        </a>
@@ -66,6 +76,7 @@
 
     <div>
         <form method="post" action="/flight/create">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
             <input type="text" name="airbus" placeholder="airbus"/>
             <input type="text" name="route" placeholder="route"/>
             <input type="date" name="departTime" placeholder="departTime"/>

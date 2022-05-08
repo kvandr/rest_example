@@ -19,10 +19,16 @@
     }
 </style>
 <body>
-
+    <div>
+        <form action="/logout" method="post">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
     <div>
         <table>
             <td><form method="get" action="/flight">
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
                 <button type="submit">back</button>
             </form></td>
         </table>
@@ -44,6 +50,7 @@
            <tr>
                <td>
                    <form method="post" action="/flight/update/{{flightId}}">
+                       <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
                        <input type="text" name="airbus" placeholder="airbus"/>
                        <input type="text" name="route" placeholder="route"/>
                        <input type="date" name="departTime" placeholder="departTime"/>
