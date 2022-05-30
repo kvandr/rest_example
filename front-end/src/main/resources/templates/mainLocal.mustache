@@ -20,27 +20,19 @@
 </style>
     <body>
         <div>
-            <form action="/logout" method="post">
+            <form action="/login" method="post">
                 <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
-                <input type="submit" value="Sign Out"/>
+                <input type="submit" value="Sign In"/>
             </form>
         </div>
         <table>
-            <td><form method="get" action="/flight">
+            <td><form method="get" action="/flightLocal">
                 <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
                 <button type="submit">flight</button>
             </form></td>
-            <td><form method="get" action="/route">
+            <td><form method="get" action="/routeLocal">
                 <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
                 <button type="submit">route</button>
-            </form></td>
-        </table>
-        <table>
-            <td>
-                <a>Доступно только для администратора:</a>
-                <form method="get" action="/registration">
-                <input type="submit" value="USER"/>
-                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
             </form></td>
         </table>
 
@@ -60,19 +52,6 @@
                    </td>
                </tr>
            {{/flights}}
-        </table>
-        <table>
-            <td><form method="post" action="/main/load" enctype="multipart/form-data">
-                <input type="file" name="file"/>
-                <button type="submit" action="/main">Import</button>
-                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
-            </form></td>
-        </table>
-        <table>
-            <td><form method="get" action="/main/download">
-                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
-                <button class="my_button" action="/main">Export</button>
-            </form></td>
         </table>
     </body>
 </html>

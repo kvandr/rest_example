@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
@@ -21,6 +22,11 @@ public class User implements UserDetails {
 
     public boolean isAdmin(){
         return roles.contains(Role.ADMIN);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
     }
 
     @Override
@@ -43,10 +49,6 @@ public class User implements UserDetails {
         return isActive();
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
-    }
 
     @Override
     public boolean equals(Object o) {

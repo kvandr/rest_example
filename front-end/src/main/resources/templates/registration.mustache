@@ -3,15 +3,56 @@
 <head>
     <title>Add new user</title>
 </head>
-<body>
-{{#message}}
-    {{message}}
-{{/message}}
-<form action="/registration" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
-</body>
+    <body>
+        <div>
+            <form action="/logout" method="post">
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+                <input type="submit" value="Sign Out"/>
+            </form>
+        </div>
+
+        <table>
+            <td><form method="get" action="/main">
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+                <button type="submit">back</button>
+            </form></td>
+        </table>
+
+        {{#message}}
+            {{message}}
+        {{/message}}
+
+        <form action="/registration" method="post">
+            <div><label> User Name : <input type="text" name="username"/> </label></div>
+            <div><label> Password: <input type="password" name="password"/> </label></div>
+            <div><label> Role: <select name="roles">
+                <option>USER</option>
+                <option>ADMIN</option>
+            </select></label></div>
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+            <div><input type="submit" value="Sign In"/></div>
+        </form>
+
+        <table>
+            {{#users}}
+                <tr>
+                    <td>
+                        <b>Id:</b> {{id}}<br>
+                        <b>Username:</b> {{username}}<br>
+                        <b>Role:</b> {{roles}}<br>
+                        <b>Active:</b> {{active}}<br>
+                    </td>
+                    <td></td>
+                    <td>
+                        <form method="get" action="/registration/delete/{{id}}">
+                            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+                            <a href="/registration">
+                                <button type="submit">delete</button>
+                            </a>
+                        </form>
+                    </td>
+                </tr>
+            {{/users}}
+        </table>
+    </body>
 </html>

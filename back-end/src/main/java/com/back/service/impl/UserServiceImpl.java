@@ -1,18 +1,20 @@
 package com.back.service.impl;
 
+import com.back.model.Role;
 import com.back.model.User;
 import com.back.repos.UserRepo;
 import com.back.service.UserService;
+import javassist.bytecode.SignatureAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepo userRepo;
-
     @Override
     public User create(User user) {
         return userRepo.save(user);

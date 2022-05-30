@@ -18,11 +18,13 @@ public class UserClient {
     String url;
 
     public User findByUsername(String username) {
+        if (username==null){
+            return null;
+        }
         ResponseEntity<User> responseEntity =
                 restTemplate.exchange(url + "/user/findByUsername/{username}",
                         HttpMethod.GET, null, new ParameterizedTypeReference<User>() {
                         },username);
-
         return responseEntity.getBody();
     }
 
@@ -51,6 +53,6 @@ public class UserClient {
     }
 
     public void deleteById(Long id) {
-        restTemplate.delete(url + "/user/deleteById/{id}",id);
+        restTemplate.delete(url + "/user/{id}",id);
     }
 }

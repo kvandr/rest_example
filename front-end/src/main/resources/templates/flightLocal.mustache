@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flight</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+</head>
+<style>
+    table{
+        border-collapse: collapse;
+    }
+    table, td, th{
+        border: 1px solid #fff;
+        padding: 5px;
+    }
+    .my_button{
+        font-size: 14pt;
+        width: 400px;
+        height: 40px;
+    }
+</style>
+<body>
+    <div>
+        <form action="/login" method="post">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+            <input type="submit" value="Sign In"/>
+        </form>
+    </div>
+
+    <table>
+        <td><form method="get" action="/mainLocal">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+            <button type="submit">back</button>
+        </form></td>
+        <td><form method="get" action="/flightLocal">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+            <button type="submit">all</button>
+        </form></td>
+    </table>
+    <table>
+        <td><form method="post" action="/flight/filter">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+            <input type="text" name="filter" placeholder="Airbus">
+            <button type="submit">Find</button>
+        </form></td>
+    </table>
+
+    <table>
+       {{#flights}}
+           <tr>
+               <td>
+                   <b>Id:</b> {{flightId}}<br>
+                   <b>Airbus:</b> {{airbus}}<br>
+                   {{#route}}
+                       <b>Route Id:</b> {{routeId}}<br>
+                   {{/route}}
+                   <b>Depart Time:</b> {{departTime}}<br>
+                   <b>Travel Time:</b> {{travelTime}}
+               </td>
+           </tr>
+       {{/flights}}
+    </table>
+</body>
+</html>

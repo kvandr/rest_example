@@ -27,7 +27,7 @@ public class Flight {
     @JoinColumn(name="route_id")
     private Route route;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="user_id")
     private User user;
 

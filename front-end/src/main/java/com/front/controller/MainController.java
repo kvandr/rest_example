@@ -70,7 +70,7 @@ public class MainController {
                 flightService.createFlight(flight);
             }
         }
-        return "redirect:/";
+        return "redirect:/main";
     }
 
     @Transactional

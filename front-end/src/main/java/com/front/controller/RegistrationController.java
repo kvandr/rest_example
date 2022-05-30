@@ -1,56 +1,51 @@
 package com.front.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.front.model.Flight;
 import com.front.model.Role;
 import com.front.model.User;
-import com.front.repos.UserClient;
-import com.front.service.FlightService;
 import com.front.service.UserService;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class RegistrationController {
     @Autowired
-    private UserClient userClient;
+    private UserService userService;
 
     @GetMapping(value = "/registration")
-    public String registration(){
+    public String registration(Map<String, Object> model){
+
+        model.put("users",userService.readAll());
         return "registration";
     }
 
     @PostMapping(value = "/registration")
-    public String addUser(User user, Map<String, Object> model){
-        User userFromDB = userClient.findByUsername(user.getUsername());
-
-        if (userFromDB!=null){
+    public String addUser(@RequestParam(name="username") String username,
+                          @RequestParam(name="password") String password,
+                          @RequestParam(name="roles") String role,
+                          Map<String, Object> model){
+        if (userService.loadUserByUsername(username)!=null){
             model.put("message", "User exists!");
             return "registration";
         }
-
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        if (Objects.equals(role, "USER")){
+            user.setRoles(Collections.singleton(Role.USER));
+        }
+        else{
+            user.setRoles(Collections.singleton(Role.ADMIN));
+        }
         user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
-        userClient.save(user);
-        return "redirect:/login";
+        userService.save(user);
+        return "redirect:/registration";
+    }
+    @GetMapping(value = "/registration/delete/{id}")
+    public String delete(@PathVariable(name = "id") Long id, Map<String, Object> model) {
+        model.put("users", userService.delete(id));
+        return "redirect:/registration";
     }
 }
