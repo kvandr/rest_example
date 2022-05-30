@@ -90,9 +90,5 @@ public class FlightController {
         return "redirect:/flight";
     }
 
-    /*@DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> deleteId(@PathVariable(name = "id") Long id) {
-        final boolean deleted = flightService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }*/
+   
 }
